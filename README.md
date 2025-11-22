@@ -1,4 +1,5 @@
 # SkillPlus2030
+### Acesse SkillPlus2030 GS.pdf para mais informações
 
 Aplicativo mobile desenvolvido em React Native para desenvolvimento de competências essenciais para o futuro do trabalho.
 
