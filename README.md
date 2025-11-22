@@ -1,97 +1,196 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# SkillPlus2030
 
-# Getting Started
+Aplicativo mobile desenvolvido em React Native para desenvolvimento de competências essenciais para o futuro do trabalho.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Sobre o App
 
-## Step 1: Start Metro
+O **SkillPlus2030** é uma plataforma de aprendizado que ajuda profissionais a desenvolverem habilidades fundamentais através de trilhas de conhecimento personalizadas. O app utiliza um sistema de autoavaliação para identificar áreas de melhoria e recomendar trilhas de aprendizado adequadas.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Funcionalidades Principais
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **Autoavaliação de Competências**: Avalie seu nível atual em diferentes habilidades (Comunicação, Pensamento Crítico, IA Básica, Sustentabilidade, Trabalho em Equipe, Gestão do Tempo)
+- **Trilhas de Aprendizado**: Acesse trilhas estruturadas com conteúdos em vídeo, texto e quizzes
+- **Recomendações Personalizadas**: Receba sugestões de trilhas baseadas nas suas autoavaliações
+- **Acompanhamento de Progresso**: Monitore seu desenvolvimento e conquistas
+- **Sistema de Gamificação**: Ganhe pontos e badges ao completar atividades
 
-```sh
-# Using npm
+
+## Como Executar
+
+### Pré-requisitos
+
+- Node.js >= 20
+- React Native CLI
+- Android Studio (para Android) ou Xcode (para iOS)
+
+### Instalação
+
+```bash
+# Instalar dependências
+npm install
+
+# Para iOS, instalar pods
+cd ios && pod install && cd ..
+```
+
+### Executar
+
+```bash
+# Iniciar Metro Bundler
 npm start
 
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+# Executar no Android (em um terminal separado)
 npm run android
 
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+# Executar no iOS (em um terminal separado)
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Estrutura do Projeto
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```
+src/
+├── components/          # Componentes reutilizáveis
+├── navigation/          # Configuração de navegação
+├── screens/            # Telas da aplicação
+│   ├── Auth/          # Login e Registro
+│   └── Home/          # Trilhas, Autoavaliação, Progresso
+├── theme/              # Estilos e temas
+└── utils/              # Funções utilitárias e lógica de negócio
+```
 
-## Step 3: Modify your app
+## Solução Proposta
 
-Now that you have successfully run the app, let's make changes!
+O **SkillPlus2030** foi desenvolvido para abordar o desafio de capacitação profissional através de uma solução mobile completa e personalizada. A aplicação implementa uma arquitetura modular e escalável que combina conceitos de orientação a objetos, separação de responsabilidades e organização estrutural.
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+### Arquitetura e Organização
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+A solução adota uma arquitetura em camadas com separação clara de responsabilidades:
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- **Camada de Apresentação (`screens/`)**: Componentes funcionais React que representam as telas da aplicação, utilizando hooks para gerenciamento de estado local
+- **Camada de Componentes (`components/`)**: Componentes reutilizáveis como `TrailCard`, seguindo o princípio DRY (Don't Repeat Yourself)
+- **Camada de Navegação (`navigation/`)**: Configuração centralizada usando React Navigation com tipagem TypeScript para type-safety
+- **Camada de Utilitários (`utils/`)**: Lógica de negócio e serviços de persistência de dados
+- **Camada de Estilização (`theme/`)**: Sistema de design unificado com constantes de cores, espaçamento e tipografia
 
-## Congratulations! :tada:
+### Implementação da Solução
 
-You've successfully run and modified your React Native App. :partying_face:
+#### 1. Sistema de Autoavaliação e Recomendações
 
-### Now what?
+O módulo de recomendações (`utils/recommendations.ts`) implementa um algoritmo inteligente que:
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+- **Interface `Trail`**: Define a estrutura de dados de uma trilha de aprendizado com propriedades tipadas (id, title, description, duration, level, category, skills, lessons)
+- **Interface `Lesson`**: Especifica os tipos de conteúdo (video, text, quiz) com duração e status de conclusão
+- **Função `getRecommendedTrails()`**: Analisa as autoavaliações do usuário, identifica competências com notas abaixo de 7 e retorna trilhas que desenvolvem essas habilidades, ordenadas por relevância
 
-# Troubleshooting
+#### 2. Persistência de Dados com AsyncStorage
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+O módulo `storage.ts` implementa um serviço de persistência seguindo padrões de encapsulamento:
 
-# Learn More
+- **Interfaces TypeScript**: `Profile`, `Assessment`, `TrailProgress`, `UserProgress` - definem contratos claros para os dados
+- **Funções especializadas**: Cada função tem responsabilidade única (saveAssessment, getAssessments, saveTrailProgress, etc.)
+- **Abstração de armazenamento**: O AsyncStorage é encapsulado, permitindo futura migração para banco de dados sem impactar o restante da aplicação
 
-To learn more about React Native, take a look at the following resources:
+#### 3. Sistema de Gamificação
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Implementação de um sistema de pontos e badges que:
+
+- **Função `addPoints()`**: Adiciona pontos de forma incremental e persistente
+- **Função `checkBadges()`**: Verifica condições para desbloqueio de badges (Primeiros Passos, Trilha Completa, Avaliador, Especialista)
+- **Função `getUserProgress()`**: Agrega dados de múltiplas fontes para gerar um resumo completo do progresso do usuário
+
+#### 4. Navegação Hierárquica
+
+A navegação utiliza múltiplos níveis de stack:
+
+- **RootStack**: Gerencia autenticação vs. aplicação principal
+- **AuthStack**: Fluxo de login e registro
+- **DrawerNavigator**: Menu lateral para acesso a perfil e configurações
+- **TabNavigator**: Navegação por abas na área principal (Trilhas, Autoavaliação, Progresso)
+
+#### 5. Componentes Reutilizáveis
+
+O componente `TrailCard` demonstra:
+
+- **Props tipadas**: Interface `Props` define o contrato do componente
+- **Composição**: Utiliza componentes nativos do React Native de forma combinada
+- **Reutilização**: Pode ser usado em diferentes contextos (trilhas recomendadas, todas as trilhas, trilhas por categoria)
+
+### Conceitos de Orientação a Objetos Aplicados
+
+Embora React utilize programação funcional, a solução incorpora princípios O.O.:
+
+1. **Encapsulamento**: Dados e funções relacionadas são agrupadas em módulos (`storage.ts`, `recommendations.ts`)
+2. **Abstração**: Interfaces TypeScript definem contratos sem expor implementação
+3. **Separação de Responsabilidades**: Cada módulo tem uma função específica e bem definida
+4. **Reutilização**: Componentes e funções utilitárias são projetados para serem reutilizáveis
+5. **Type Safety**: TypeScript garante consistência de tipos em toda a aplicação
+
+### Organização de Diretórios
+
+A estrutura de diretórios segue o padrão de organização por funcionalidade:
+
+- **Separação por contexto**: `Auth/` e `Home/` agrupam telas relacionadas
+- **Componentes compartilhados**: `components/` contém elementos reutilizáveis
+- **Configuração centralizada**: `navigation/` e `theme/` centralizam configurações
+- **Lógica de negócio isolada**: `utils/` separa regras de negócio da apresentação
+
+Esta organização facilita manutenção, escalabilidade e colaboração em equipe.
+
+## Resultados Esperados e Impacto
+
+### Resultados Esperados
+
+Com a implementação do **SkillPlus2030**, espera-se alcançar os seguintes resultados:
+
+1. **Aumento da Autoconsciência Profissional**
+   - Usuários terão maior clareza sobre suas competências atuais através do sistema de autoavaliação
+   - Identificação precisa de gaps de conhecimento e áreas de melhoria
+
+2. **Desenvolvimento Personalizado de Competências**
+   - Recomendações inteligentes direcionam o aprendizado para áreas prioritárias
+   - Redução do tempo necessário para identificar conteúdos relevantes
+
+3. **Engajamento Sustentado**
+   - Sistema de gamificação (pontos e badges) mantém motivação ao longo do tempo
+   - Progresso visual e conquistas incentivam continuidade no aprendizado
+
+4. **Acesso Democratizado ao Aprendizado**
+   - Plataforma mobile permite aprendizado em qualquer lugar e momento
+   - Conteúdos estruturados em trilhas facilitam o aprendizado progressivo
+
+5. **Mensuração de Progresso**
+   - Dashboard de progresso fornece métricas claras de desenvolvimento
+   - Histórico de autoavaliações permite acompanhar evolução ao longo do tempo
+
+### Impacto Positivo Almejado
+
+#### Impacto Individual
+
+- **Desenvolvimento Profissional Contínuo**: Profissionais terão acesso a uma ferramenta que facilita o aprendizado contínuo e o desenvolvimento de competências essenciais para 2030
+- **Preparação para o Futuro do Trabalho**: Foco em competências como IA, sustentabilidade e soft skills prepara usuários para as demandas do mercado futuro
+- **Autonomia no Aprendizado**: Sistema de recomendações personalizadas permite aprendizado autodirigido e eficiente
+
+#### Impacto Organizacional
+
+- **Capacitação de Equipes**: Organizações podem utilizar a plataforma para capacitar equipes de forma escalável
+- **Redução de Custos de Treinamento**: Solução mobile reduz necessidade de treinamentos presenciais e infraestrutura física
+- **Mensuração de Desenvolvimento**: Métricas de progresso permitem acompanhamento do desenvolvimento de competências em nível organizacional
+
+#### Impacto Social
+
+- **Democratização da Educação**: Acesso facilitado a conteúdos de qualidade através de dispositivo mobile
+- **Preparação para Transformação Digital**: Contribuição para preparação da força de trabalho para mudanças tecnológicas
+- **Sustentabilidade**: Promoção de competências relacionadas à sustentabilidade no ambiente profissional
+
+### Métricas de Sucesso
+
+A solução será considerada bem-sucedida quando:
+
+- Usuários completarem pelo menos 2 trilhas nos primeiros 3 meses
+- Taxa de retenção mensal superior a 60%
+- Média de autoavaliações por usuário superior a 4
+- 80% dos usuários desbloquearem pelo menos 1 badge
+- Melhoria média de 1.5 pontos nas autoavaliações após 6 meses de uso
+
+O **SkillPlus2030** representa uma solução completa e inovadora para o desafio de capacitação profissional, combinando tecnologia moderna, design centrado no usuário e uma abordagem baseada em dados para personalização do aprendizado.
